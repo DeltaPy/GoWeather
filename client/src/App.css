@@ -1,8 +1,3 @@
-.container {
-  /* color: #FFF; */
-  font-family: "Raleway", sans-serif;
-}
-
 .citta {
     color: #FFF;
     text-align: center;
@@ -23,7 +18,6 @@
 }
 
 .glass {
-  /* GLASS */
   background: rgba( 255, 255, 255, 0.05 );
   backdrop-filter: blur( 2.0px );
   -webkit-backdrop-filter: blur( 2.0px );
@@ -31,5 +25,4 @@
   min-width: 30%;
   height: 60vh;
   min-height: 60%;
-  /* GLASS */
 }
