@@ -54,7 +54,7 @@ export default class Settimana extends Component {
                     <div className="card-body">
                         <h5 className="card-title">{e.title}</h5>
                         <h5 className="card-title">23/04</h5>
-                        <img src={sunny} className="card-img"/>
+                        <img src={sunny} className="card-img" alt={"weather"}/>
                         <div className="card-minMaxTemp mt-3">
                             <span>24 <FontAwesomeIcon icon={faTemperatureHigh}/></span>
                             <span>16 <FontAwesomeIcon icon={faTemperatureLow}/></span>
