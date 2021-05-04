@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TutorialDataService from "../services/giorno.service";
+import TutorialDataService from "../services/weather.service";
 
 export default class Tutorial extends Component {
   constructor(props) {

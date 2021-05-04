@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TutorialDataService from "../services/giorno.service";
+import WeatherDataService from "../services/weather.service";
 import { Link } from "react-router-dom";
 
 export default class TutorialsList extends Component {
@@ -33,7 +33,7 @@ export default class TutorialsList extends Component {
   }
 
   retrieveTutorials() {
-    TutorialDataService.getAll()
+    WeatherDataService.getAll()
       .then(response => {
         this.setState({
           tutorials: response.data
@@ -61,7 +61,7 @@ export default class TutorialsList extends Component {
   }
 
   removeAllTutorials() {
-    TutorialDataService.deleteAll()
+    WeatherDataService.deleteAll()
       .then(response => {
         console.log(response.data);
         this.refreshList();
@@ -72,7 +72,7 @@ export default class TutorialsList extends Component {
   }
 
   searchTitle() {
-    TutorialDataService.findByTitle(this.state.searchTitle)
+    WeatherDataService.findByTitle(this.state.searchTitle)
       .then(response => {
         this.setState({
           tutorials: response.data

@@ -10,7 +10,7 @@ html {
     left: 0;
     margin: 0;
     padding: 0;
-    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    background: radial-gradient(ellipse at bottom, #364f6b 0%, #1b2735 100%);
     overflow: hidden;
     z-index: -1;
 }

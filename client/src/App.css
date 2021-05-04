@@ -1,23 +1,35 @@
-.citta {
-    color: #FFF;
-    text-align: center;
-    font-size: 80px;
-    font-weight: 300;
-}
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.location {
   text-align: center;
+  
 }
 
-.settimana {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+.citta {
+  color: #FFF;
+  font-size: 80px;
+  font-weight: 300;
+  position: relative;
+  top: 1vh;
 }
 
-.glass {
+.ora {
+  text-align: right;
+  color: #FFF;
+  font-size: 48px;
+  font-weight: 300;
+  position: absolute;
+  top: 5vh;
+  right: 5vh;
+}
+
+.temperatura {
+  position: relative;
+  top: -20px;
+  color: #FFF;
+  font-size: 48px;
+  font-weight: 300;
+}
+
+.glassContainer {
   background: rgba( 255, 255, 255, 0.05 );
   backdrop-filter: blur( 2.0px );
   -webkit-backdrop-filter: blur( 2.0px );
@@ -25,4 +37,19 @@
   min-width: 30%;
   height: 60vh;
   min-height: 60%;
+}
+
+.mainContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.gridContainer {
+  margin: auto;
+  height: 100%;
+  width: 95vw;
+  display: grid;
+  grid-template-columns: 30vw 64vw;
+  grid-template-rows: 50%;
+  gap: 0px 15px;
 }

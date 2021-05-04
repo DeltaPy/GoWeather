@@ -1,11 +1,70 @@
-.glass {
-    /* GLASS */
-    background: rgba( 255, 255, 255, 0.05 );
-    backdrop-filter: blur( 2.0px );
-    -webkit-backdrop-filter: blur( 2.0px );
-    border-radius: 10px;
-    min-width: 30%;
-    height: 60vh;
-    min-height: 60%;
-    /* GLASS */
-  }
+.glassContainer {
+  background: rgba( 255, 255, 255, 0.05 );
+  backdrop-filter: blur( 2.0px );
+  -webkit-backdrop-filter: blur( 2.0px );
+  border-radius: 10px;
+  min-width: 30%;
+  height: 60vh;
+  min-height: 60%;
+}
+
+
+.gridGiorni {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 10% 90%;
+  gap: 5px 5px;
+  grid-template-areas:
+    "."
+    ".";
+  /* border: 5px red solid; */
+  height:100%;
+}
+
+.gridButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  /* gap: 35%; */
+  height: 100%;
+}
+
+.gridButtons:nth-child(1) {
+  display: block;
+  flex-grow: 0;
+}
+
+.gridButtons:nth-child(2) {
+  display: block;
+  flex-grow: 2;
+}
+
+.gridButtons:nth-child(3) {
+  display: block;
+  flex-grow: 0;
+}
+
+.gridButtonsContainer > span {
+  color: white;
+  font-size: 30px;
+  text-align: center;
+}
+
+.test {
+  border: 1px pink solid;
+  height: 100%;
+  width: 100%;
+}
+
+.settimana {
+  color:white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.giorno {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import WeatherDataService from "../services/giorno.service";
+import WeatherDataService from "../services/weather.service";
 
 export default class AddTutorial extends Component {
   constructor(props) {
