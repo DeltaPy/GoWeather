@@ -24,10 +24,10 @@ function App() {
 
       <div className="mainContainer">
         <div className="gridContainer">
-          <div className="glassContainer">
+          <div className="glassContainer1">
 
           </div>
-          <div className="glassContainer">
+          <div className="glassContainer2">
             <Settimana/>
           </div>
         </div>

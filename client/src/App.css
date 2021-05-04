@@ -1,6 +1,5 @@
 .location {
   text-align: center;
-  
 }
 
 .citta {
@@ -29,14 +28,20 @@
   font-weight: 300;
 }
 
-.glassContainer {
+.glassContainer1 {
   background: rgba( 255, 255, 255, 0.05 );
   backdrop-filter: blur( 2.0px );
   -webkit-backdrop-filter: blur( 2.0px );
   border-radius: 10px;
-  min-width: 30%;
   height: 60vh;
-  min-height: 60%;
+}
+
+.glassContainer2 {
+  background: rgba( 255, 255, 255, 0.05 );
+  backdrop-filter: blur( 2.0px );
+  -webkit-backdrop-filter: blur( 2.0px );
+  border-radius: 10px;
+  height: 60vh;
 }
 
 .mainContainer {

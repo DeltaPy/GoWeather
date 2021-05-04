@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import WeatherDataService from "../../services/weather.service";
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowLeft, faTemperatureLow, faTemperatureHigh, faWind, faTint } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import './settimana.css'
+import sunny from "../../images/icons/sun.png";
+
+import './settimana.css';
 
 export default class Settimana extends Component {
     constructor(props) {
@@ -31,8 +33,9 @@ export default class Settimana extends Component {
         })
     }
 
-    
+    weatherIcon() {
 
+    }
 
     render() {
         const { giorni } = this.state;
@@ -40,17 +43,28 @@ export default class Settimana extends Component {
         return (
             <div className="gridGiorni">
                 <div className="gridButtonsContainer btn-group">
-                    <button type="button" class="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowLeft}/></button>
+                    <button type="button" className="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowLeft}/></button>
                     <span className="gridButtons">03 Maggio / 09 Maggio</span>
-                    <button type="button" class="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowRight}/></button>
+                    <button type="button" className="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowRight}/></button>
                 </div>
                 
-            <div className="test">
-                {/* <ul className="list-group flex-row">
-                    {giorni.map(e => 
-                        (<li className="list-group-item">{e.title}</li>)
-                    )}
-                </ul> */}
+            <div className="gridWeekContainer m-3">
+                {giorni.map((e, index) => (
+                <div key={index} className="card">   
+                    <div className="card-body">
+                        <h5 className="card-title">{e.title}</h5>
+                        <h5 className="card-title">23/04</h5>
+                        <img src={sunny} className="card-img"/>
+                        <div className="card-minMaxTemp mt-3">
+                            <span>24 <FontAwesomeIcon icon={faTemperatureHigh}/></span>
+                            <span>16 <FontAwesomeIcon icon={faTemperatureLow}/></span>
+                        </div>
+                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faTint}/> 0.3 mm</h5>
+                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faWind}/> 10 m/s</h5>
+                        <h5 className="card-text mt-2">Umidità:10 %</h5>
+                    </div> 
+                </div>
+                ))}
             </div>
         </div>
         );

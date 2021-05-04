@@ -1,14 +1,3 @@
-.glassContainer {
-  background: rgba( 255, 255, 255, 0.05 );
-  backdrop-filter: blur( 2.0px );
-  -webkit-backdrop-filter: blur( 2.0px );
-  border-radius: 10px;
-  min-width: 30%;
-  height: 60vh;
-  min-height: 60%;
-}
-
-
 .gridGiorni {
   display: grid;
   grid-template-columns: 100%;
@@ -17,8 +6,7 @@
   grid-template-areas:
     "."
     ".";
-  /* border: 5px red solid; */
-  height:100%;
+  height: 100%;
 }
 
 .gridButtonsContainer {
@@ -50,21 +38,34 @@
   text-align: center;
 }
 
-.test {
-  border: 1px pink solid;
-  height: 100%;
-  width: 100%;
+/* CARD */
+.gridWeekContainer {
+  display: grid;
+  grid-template-columns: 13.9% 13.9% 13.9% 13.9% 13.9% 13.9% 13.9%;
+  gap: 0px 5px;
 }
 
-.settimana {
-  color:white;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+.card {
   text-align: center;
 }
 
-.giorno {
-  display: flex;
-  flex-direction: column;
+.card-minMaxTemp {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  width: 100%;
+  font-size: 20px;
 }
+
+.card-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 16px;
+  text-align: left;
+}
+
+
+
