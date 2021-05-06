@@ -19,6 +19,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("./giorno.model.js")(sequelize, Sequelize);
+db.goWeather = require("./weather.model.js")(sequelize, Sequelize);
 
 module.exports = db;

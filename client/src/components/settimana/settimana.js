@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import WeatherDataService from "../../services/weather.service";
-import { faArrowRight, faArrowLeft, faTemperatureLow, faTemperatureHigh, faWind, faTint } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowLeft,
+        faTemperatureLow, faTemperatureHigh,
+         faWind, faTint, faCloudRain } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import sunny from "../../images/icons/sun.png";
 
@@ -33,6 +35,12 @@ export default class Settimana extends Component {
         })
     }
 
+    // convertDateToDays() {
+    //     const day = giorni.date;
+    //     console.log(day);
+    //     return giorni.day = day;
+    // }
+
     weatherIcon() {
 
     }
@@ -52,16 +60,16 @@ export default class Settimana extends Component {
                 {giorni.map((e, index) => (
                 <div key={index} className="card">   
                     <div className="card-body">
-                        <h5 className="card-title">{e.title}</h5>
-                        <h5 className="card-title">23/04</h5>
+                        <h5 className="card-title">{e.day}</h5>
+                        <h5 className="card-title">{e.date}</h5>
                         <img src={sunny} className="card-img" alt={"weather"}/>
                         <div className="card-minMaxTemp mt-3">
-                            <span>24 <FontAwesomeIcon icon={faTemperatureHigh}/></span>
+                            <span>{e.temperatura} <FontAwesomeIcon icon={faTemperatureHigh}/></span>
                             <span>16 <FontAwesomeIcon icon={faTemperatureLow}/></span>
                         </div>
-                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faTint}/> 0.3 mm</h5>
+                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faCloudRain}/> {e.prob_prep}%</h5>
+                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faTint}/> 10%</h5>
                         <h5 className="card-text mt-2"><FontAwesomeIcon icon={faWind}/> 10 m/s</h5>
-                        <h5 className="card-text mt-2">Umidità:10 %</h5>
                     </div> 
                 </div>
                 ))}

@@ -1,13 +1,13 @@
 const { sequelize } = require("../models");
 const db = require("../models");
-const Tutorial = db.tutorials;
+const weatherData = db.goWeather;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
   // Validate request
   console.log(req.body);
-  if (!req.body.title) {
+  if (!req.body.id) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -15,15 +15,20 @@ exports.create = (req, res) => {
   }
 
   // Create a Tutorial
-  const tutorial = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+  const weatherData = {
+    id: req.body.id,
+    date: req.body.date,
+    temperatura: req.body.temperatura,
+    prob_prep: req.body.prob_prep
   };
+  console.log(weatherData);
+  
+  res.status(200).send({message: "Success!"});
+  
 
-    sequelize.query('INSERT INTO tutorial (id,title,description,published) VALUES(DEFAULT,"Ciao","Gay",1)', 
-    {type: sequelize.QueryTypes.INSERT}).then(data => {res.status(200)
-        .send({message: "Success!"})});
+    // sequelize.query('INSERT INTO misurazioni (id,title,description,published) VALUES(DEFAULT,"Ciao","Gay",1)', 
+    // {type: sequelize.QueryTypes.INSERT}).then(data => {res.status(200)
+    //     .send({message: "Success!"})});
 
 //   // Save Tutorial in the database
 //   Tutorial.create(tutorial)
@@ -40,10 +45,17 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    const id = req.params.id;
+    const temperatura = req.params.temperatura;
+    const date = req.query.date;
+    const prob_prep = req.query.prob_prep;
+
+    var condition = date ? { date: { [Op.like]: `%${date}%` } } : null
+    && id ? { id: { [Op.like]: `%${id}%` } } : null
+    && temperatura ? { temperatura: { [Op.like]: `%${temperatura}%` } } : null
+    && prob_prep ? { prob_prep: { [Op.like]: `%${prob_prep}%` } } : null;
   
-    Tutorial.findAll({ where: condition })
+    weatherData.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
@@ -59,7 +71,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Tutorial.findByPk(id)
+    weatherData.findByPk(id)
       .then(data => {
         res.send(data);
       })
@@ -74,7 +86,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Tutorial.update(req.body, {
+    weatherData.update(req.body, {
       where: { id: id }
     })
       .then(num => {
@@ -99,7 +111,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Tutorial.destroy({
+    weatherData.destroy({
       where: { id: id }
     })
       .then(num => {
@@ -122,7 +134,7 @@ exports.delete = (req, res) => {
 
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-    Tutorial.destroy({
+    weatherData.destroy({
         where: {},
         truncate: false
       })
@@ -139,7 +151,7 @@ exports.deleteAll = (req, res) => {
 
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
-    Tutorial.findAll({ where: { published: true } })
+    weatherData.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
