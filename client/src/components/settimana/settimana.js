@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import WeatherDataService from "../../services/weather.service";
 import { faArrowRight, faArrowLeft,
         faTemperatureLow, faTemperatureHigh,
@@ -8,26 +8,22 @@ import sunny from "../../images/icons/sun.png";
 
 import './settimana.css';
 
-export default class Settimana extends Component {
-    constructor(props) {
-        super(props);
-        this.getGiorni = this.getGiorni.bind(this);
+function Settimana(props) {
+        const [giorni, setGiorni] = useState([]);
+        
+        const date = new Date();
+        const day = date.toLocaleDateString('it-IT', {day: 'numeric'});
+        const month = date.toLocaleDateString('it-IT', {month: 'long'});
 
-        this.state = {
-            giorni: []
-        };
-    }
+        const [fromDay, setFromDay] = useState(day);
+        const [toDay, setToDay] = useState(parseInt(day) + 6);
 
-    componentDidMount() {
-        this.getGiorni();
-    }
-
-    getGiorni() {
-        WeatherDataService.getAll()
+    function getWeek(fromDay, toDay) {
+        WeatherDataService.getWeek(fromDay, toDay)
+        // WeatherDataService.getAll()
         .then(response => {
-            this.setState({
-                giorni: response.data
-            });
+            convertDateToDays(response.data);
+            console.log(response);
             console.log(response.data);
         })
         .catch(err => {
@@ -35,25 +31,46 @@ export default class Settimana extends Component {
         })
     }
 
-    // convertDateToDays() {
-    //     const day = giorni.date;
-    //     console.log(day);
-    //     return giorni.day = day;
-    // }
+    function changeWeek(x) {
+        if(x === 1) {
+            setFromDay(parseInt(fromDay) + 6);
+            setToDay(parseInt(toDay) + 12);
 
-    weatherIcon() {
+            WeatherDataService.getWeek(fromDay, toDay);
 
+            console.log("From Day: " + fromDay);
+            console.log("To Day: " + toDay);
+        }
+        else if(x === 0) {
+            setFromDay(parseInt(fromDay) - 6);
+            setToDay(parseInt(toDay) - 12);
+            WeatherDataService.getWeek(fromDay, toDay);
+            console.log("From Day: " + fromDay);
+            console.log("To Day: " + toDay);
+        }
     }
 
-    render() {
-        const { giorni } = this.state;
+    function convertDateToDays(data) {
+        const days = Object.keys(data).map(key => data[key]);
+        days.map((day) => {
+            let date = new Date(day.date);
+            day.day = date.toLocaleString('it-IT', {weekday: 'long'}).charAt(0).toUpperCase() + 
+            date.toLocaleString('it-IT', {weekday: 'long'}).slice(1);
+        });
+        setGiorni(data);
+    }
+
+    useEffect(() =>{
+        getWeek();
+    }, [])
+
 
         return (
             <div className="gridGiorni">
                 <div className="gridButtonsContainer btn-group">
-                    <button type="button" className="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowLeft}/></button>
-                    <span className="gridButtons">03 Maggio / 09 Maggio</span>
-                    <button type="button" className="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowRight}/></button>
+                    <button type="button" onClick={() => changeWeek(0)} className="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowLeft}/></button>
+                    <span className="gridButtons">{fromDay + " " + month + " / " + toDay + " " + month}</span>
+                    <button type="button" onClick={() => changeWeek(1)} className="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowRight}/></button>
                 </div>
                 
             <div className="gridWeekContainer m-3">
@@ -61,7 +78,7 @@ export default class Settimana extends Component {
                 <div key={index} className="card">   
                     <div className="card-body">
                         <h5 className="card-title">{e.day}</h5>
-                        <h5 className="card-title">{e.date}</h5>
+                        <h5 className="card-title">{e.date.slice(8,10)}</h5>
                         <img src={sunny} className="card-img" alt={"weather"}/>
                         <div className="card-minMaxTemp mt-3">
                             <span>{e.temperatura} <FontAwesomeIcon icon={faTemperatureHigh}/></span>
@@ -76,5 +93,6 @@ export default class Settimana extends Component {
             </div>
         </div>
         );
-    }
 }
+
+export default Settimana;

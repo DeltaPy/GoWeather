@@ -10,7 +10,7 @@ import Settimana from './components/settimana/settimana.js';
 import Clock from './components/clock.js';
 
 function App() {
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("Inserisci la città");
   return (
     <div>
       <Geolocation
@@ -25,7 +25,8 @@ function App() {
           .then(response => response.json())
           .then(data => setCity(data.address.city));
           break;
-        }}}
+        }
+      }}
       />
       <ul className="background">
         <li></li>
@@ -35,6 +36,7 @@ function App() {
         <span className="citta">{city}</span>
         <span className="ora"><Clock/></span>
         <br/>
+        {/* <span className="dateToday">{displayDate}</span> */}
         <span className="temperatura">24°<FontAwesomeIcon icon={faSun} /></span>
       </div>
 

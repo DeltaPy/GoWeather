@@ -11,14 +11,18 @@
 }
 
 .ora {
-  text-align: right;
+
   color: #FFF;
-  font-size: 56px;
-  font-weight: 300;
+  font-size: 42px;
+  font-weight: 200;
   position: absolute;
-  top: 5vh;
-  right: 5vh;
+  top: 8vh;
+  right: 8vh;
+  /* width: 200px; */
+  word-wrap: break-word;
+  line-height: 0.8;
 }
+
 
 .temperatura {
   position: relative;

@@ -3,6 +3,34 @@ const db = require("../models");
 const weatherData = db.goWeather;
 const Op = db.Sequelize.Op;
 
+
+function cleanNull(data) {
+  for(i in data) {
+    data[i].dataValues = {
+      ...data[i].dataValues,
+      date: data[i].dataValues.date === null ? "NaN" : data[i].dataValues.date,
+      temperatura: data[i].dataValues.temperatura === null ? "NaN" : data[i].dataValues.temperatura,
+      prob_prep: data[i].dataValues.prob_prep === null ? "NaN" : data[i].dataValues.prob_prep
+    };
+  }
+  return data;
+}
+
+function cleanNullWeek(data) {
+  for(i in data) {
+    data[i] = {
+      ...data[i],
+      date: data[i].date === null ? "NaN" : data[i].date,
+      temperatura: data[i].temperatura === null ? "NaN" : data[i].temperatura,
+      prob_prep: data[i].prob_prep === null ? "NaN" : data[i].prob_prep
+    };
+  }
+  return data;
+}
+
+
+
+
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
   // Validate request
@@ -45,19 +73,10 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-    const id = req.params.id;
-    const temperatura = req.params.temperatura;
-    const date = req.query.date;
-    const prob_prep = req.query.prob_prep;
-
-    var condition = date ? { date: { [Op.like]: `%${date}%` } } : null
-    && id ? { id: { [Op.like]: `%${id}%` } } : null
-    && temperatura ? { temperatura: { [Op.like]: `%${temperatura}%` } } : null
-    && prob_prep ? { prob_prep: { [Op.like]: `%${prob_prep}%` } } : null;
-  
-    weatherData.findAll({ where: condition })
+    weatherData.findAll()
       .then(data => {
-        res.send(data);
+        // console.log(data);
+        res.send(cleanNull(data));
       })
       .catch(err => {
         res.status(500).send({
@@ -65,6 +84,18 @@ exports.findAll = (req, res) => {
             err.message || "Some error occurred while retrieving tutorials."
         });
       });
+};
+
+
+// Get a week from a date range.
+exports.getWeek = (req, res) => {
+  console.log(req.body);
+  sequelize.query("SELECT * from misurazioni", { type: sequelize.QueryTypes.SELECT})
+  .then(data => {
+    console.log(cleanNullWeek(data));
+    res.send(cleanNullWeek(data));
+  })
+  // res.status(200).send({loopback: req.body});
 };
 
 // Find a single Tutorial with an id

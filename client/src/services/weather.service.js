@@ -4,6 +4,13 @@ class WeatherDataService {
   getAll() {
     return http.get("/weatherData");
   }
+  
+  getWeek(fromDay, toDay) {
+    return http.post(`/weatherData/getWeek`, {
+      from: fromDay,
+      to: toDay
+    })
+  }
 
   get(id) {
     return http.get(`/weatherData/${id}`);

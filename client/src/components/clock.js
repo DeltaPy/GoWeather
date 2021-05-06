@@ -26,9 +26,12 @@ export default class Clock extends Component {
       }
 
     render() {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return (
             <>
-                {this.state.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false})}
+                {this.state.date.toLocaleTimeString(('it-IT')).slice(0,5)}
+                <br/>
+                {this.state.date.toLocaleString('it-IT', options)}
             </>
         )
     }
