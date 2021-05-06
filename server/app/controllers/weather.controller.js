@@ -90,12 +90,11 @@ exports.findAll = (req, res) => {
 // Get a week from a date range.
 exports.getWeek = (req, res) => {
   console.log(req.body);
-  sequelize.query("SELECT * from misurazioni", { type: sequelize.QueryTypes.SELECT})
+  sequelize.query(`SELECT * from misurazioni WHERE DATE BETWEEN '${req.body.from}' AND '${req.body.to}'`, { type: sequelize.QueryTypes.SELECT})
   .then(data => {
-    console.log(cleanNullWeek(data));
+    console.log(data);
     res.send(cleanNullWeek(data));
   })
-  // res.status(200).send({loopback: req.body});
 };
 
 // Find a single Tutorial with an id

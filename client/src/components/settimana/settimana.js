@@ -4,47 +4,65 @@ import { faArrowRight, faArrowLeft,
         faTemperatureLow, faTemperatureHigh,
          faWind, faTint, faCloudRain } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { dateCarousel } from "date-carousel";
 import sunny from "../../images/icons/sun.png";
+
 
 import './settimana.css';
 
 function Settimana(props) {
         const [giorni, setGiorni] = useState([]);
         
-        const date = new Date();
+        let date = new Date();
         const day = date.toLocaleDateString('it-IT', {day: 'numeric'});
         const month = date.toLocaleDateString('it-IT', {month: 'long'});
-
-        const [fromDay, setFromDay] = useState(day);
+        
+        const [fromDay, setFromDay] = useState(parseInt(day));
         const [toDay, setToDay] = useState(parseInt(day) + 6);
 
-    function getWeek(fromDay, toDay) {
-        WeatherDataService.getWeek(fromDay, toDay)
-        // WeatherDataService.getAll()
+        
+
+    function getWeek(xDay, yDay) {
+        WeatherDataService.getWeek(xDay, yDay)
         .then(response => {
             convertDateToDays(response.data);
-            console.log(response);
-            console.log(response.data);
         })
         .catch(err => {
             console.error(err);
         })
     }
 
+    Date.prototype.addDays = function (days) {
+        let date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      }
+
     function changeWeek(x) {
         if(x === 1) {
-            setFromDay(parseInt(fromDay) + 6);
-            setToDay(parseInt(toDay) + 12);
 
-            WeatherDataService.getWeek(fromDay, toDay);
+            let i = 0;
+            let x = 0;
+
+            setFromDay(date.addDays(i+6));
+            setToDay(date.addDays(x+12));
+
+            getWeek(fromDay, toDay);
 
             console.log("From Day: " + fromDay);
             console.log("To Day: " + toDay);
         }
         else if(x === 0) {
-            setFromDay(parseInt(fromDay) - 6);
-            setToDay(parseInt(toDay) - 12);
-            WeatherDataService.getWeek(fromDay, toDay);
+            const nextOneWeek = new Date(date);
+            nextOneWeek.setDate(nextOneWeek.getDate() - 6);
+
+            const nextTwoWeek = new Date(date);
+            nextTwoWeek.setDate(nextTwoWeek.getDate() - 12);
+            setFromDay(nextOneWeek);
+            setToDay(nextTwoWeek);
+
+            getWeek(fromDay, toDay);
+
             console.log("From Day: " + fromDay);
             console.log("To Day: " + toDay);
         }
@@ -61,7 +79,7 @@ function Settimana(props) {
     }
 
     useEffect(() =>{
-        getWeek();
+        getWeek(fromDay, toDay);
     }, [])
 
 
