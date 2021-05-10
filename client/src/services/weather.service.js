@@ -5,8 +5,10 @@ class WeatherDataService {
     return http.get("/weatherData");
   }
   
-  getWeek(fromDay, toDay) {
+  getWeek(fromDay, toDay, lat, lon) {
     return http.post(`/weatherData/getWeek`, {
+      lat: lat,
+      lon: lon,
       from: fromDay,
       to: toDay
     })

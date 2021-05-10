@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Switch, Route, Link } from "react-router-dom";
+import React, { useState} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,6 +20,8 @@ function App() {
         getCurrentPosition
         }) => {
         while(typeof latitude !== 'undefined') {
+          localStorage.setItem('lat', latitude);
+          localStorage.setItem('lon', longitude);
           fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&zoom=10&format=json&accept-language=it`, {referrer: "about:client"})
           .then(response => response.json())
           .then(data => setCity(data.address.city));
@@ -44,8 +45,6 @@ function App() {
         <div className="gridContainer">
           <div className="glassContainer1">
             
-
-
           </div>
           <div className="glassContainer2">
             <Settimana/>

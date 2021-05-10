@@ -4,8 +4,8 @@ import { faArrowRight, faArrowLeft,
         faTemperatureLow, faTemperatureHigh,
          faWind, faTint, faCloudRain } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { dateCarousel } from "date-carousel";
 import sunny from "../../images/icons/sun.png";
+
 
 
 import './settimana.css';
@@ -13,17 +13,21 @@ import './settimana.css';
 function Settimana(props) {
         const [giorni, setGiorni] = useState([]);
         
-        let date = new Date();
-        const day = date.toLocaleDateString('it-IT', {day: 'numeric'});
-        const month = date.toLocaleDateString('it-IT', {month: 'long'});
-        
-        const [fromDay, setFromDay] = useState(parseInt(day));
-        const [toDay, setToDay] = useState(parseInt(day) + 6);
+        const date = new Date();
+        let fromDate = new Date();
+        let toDate = new Date();
 
+        toDate.setDate(toDate.getDate() + 6);
         
+        let [addSix, setAddSix] = useState(7);
+        let [addTwelve, setAddTwelve] = useState(7);
+        let [fromDay, setFromDay] = useState(fromDate);
+        let [toDay, setToDay] = useState(toDate);
 
-    function getWeek(xDay, yDay) {
-        WeatherDataService.getWeek(xDay, yDay)
+    function getWeek() {
+        WeatherDataService.getWeek(fromDate, toDate,
+            localStorage.getItem('lat'),
+            localStorage.getItem('lon'))
         .then(response => {
             convertDateToDays(response.data);
         })
@@ -32,39 +36,26 @@ function Settimana(props) {
         })
     }
 
-    Date.prototype.addDays = function (days) {
-        let date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-      }
 
     function changeWeek(x) {
         if(x === 1) {
-
-            let i = 0;
-            let x = 0;
-
-            setFromDay(date.addDays(i+6));
-            setToDay(date.addDays(x+12));
-
-            getWeek(fromDay, toDay);
-
-            console.log("From Day: " + fromDay);
-            console.log("To Day: " + toDay);
+        
+            setAddSix(addSix+=7);
+            setAddTwelve(addTwelve+=7);
+            setFromDay(fromDate);
+            setToDay(toDate);
+            fromDate.setDate(fromDate.getDate() + addSix);
+            toDate.setDate(toDate.getDate() + addTwelve);
+            getWeek();
         }
         else if(x === 0) {
-            const nextOneWeek = new Date(date);
-            nextOneWeek.setDate(nextOneWeek.getDate() - 6);
-
-            const nextTwoWeek = new Date(date);
-            nextTwoWeek.setDate(nextTwoWeek.getDate() - 12);
-            setFromDay(nextOneWeek);
-            setToDay(nextTwoWeek);
-
-            getWeek(fromDay, toDay);
-
-            console.log("From Day: " + fromDay);
-            console.log("To Day: " + toDay);
+            setAddSix(addSix-=7);
+            setAddTwelve(addTwelve-=7);
+            setFromDay(fromDate);
+            setToDay(toDate);
+            fromDate.setDate(fromDate.getDate() + addSix);
+            toDate.setDate(toDate.getDate() + addTwelve);
+            getWeek();
         }
     }
 
@@ -79,7 +70,7 @@ function Settimana(props) {
     }
 
     useEffect(() =>{
-        getWeek(fromDay, toDay);
+        getWeek();
     }, [])
 
 
@@ -87,7 +78,7 @@ function Settimana(props) {
             <div className="gridGiorni">
                 <div className="gridButtonsContainer btn-group">
                     <button type="button" onClick={() => changeWeek(0)} className="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowLeft}/></button>
-                    <span className="gridButtons">{fromDay + " " + month + " / " + toDay + " " + month}</span>
+                    <span className="gridButtons">{fromDay.toLocaleDateString('it-IT', {day: 'numeric', month: 'long'}) + " / " + toDay.toLocaleDateString('it-IT', {day: 'numeric', month: 'long'})}</span>
                     <button type="button" onClick={() => changeWeek(1)} className="btn btn-primary gridButtons"><FontAwesomeIcon icon={faArrowRight}/></button>
                 </div>
                 

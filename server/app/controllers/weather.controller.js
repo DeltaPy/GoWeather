@@ -2,6 +2,7 @@ const { sequelize } = require("../models");
 const db = require("../models");
 const weatherData = db.goWeather;
 const Op = db.Sequelize.Op;
+const fetch = require("node-fetch");
 
 
 function cleanNull(data) {
@@ -71,7 +72,7 @@ exports.create = (req, res) => {
 //     });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Data from the database.
 exports.findAll = (req, res) => {
     weatherData.findAll()
       .then(data => {
@@ -90,12 +91,16 @@ exports.findAll = (req, res) => {
 // Get a week from a date range.
 exports.getWeek = (req, res) => {
   console.log(req.body);
-  sequelize.query(`SELECT * from misurazioni WHERE DATE BETWEEN '${req.body.from}' AND '${req.body.to}'`, { type: sequelize.QueryTypes.SELECT})
+  sequelize.query(`SELECT * from misurazioni WHERE DATE BETWEEN '${req.body.from}' AND '${req.body.to}'`, {type: sequelize.QueryTypes.SELECT})
   .then(data => {
     console.log(data);
-    res.send(cleanNullWeek(data));
+    if(data.length < 6) {
+      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${req.body.lat}&lon=${req.body.lon}&exclude=minutely,hourly,alerts,current&appid=db63a7aaa092b7a936170ecb1bba91cf&lang=it&units=metric`)
+      .then(response => response.json())
+      .then(data => console.log(data));
+      } else res.send(cleanNullWeek(data));
   })
-};
+}
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
