@@ -30,6 +30,7 @@ function Settimana(props) {
             localStorage.getItem('lon'))
         .then(response => {
             convertDateToDays(response.data);
+            console.log(response.data);
         })
         .catch(err => {
             console.error(err);
@@ -39,7 +40,6 @@ function Settimana(props) {
 
     function changeWeek(x) {
         if(x === 1) {
-        
             setAddSix(addSix+=7);
             setAddTwelve(addTwelve+=7);
             setFromDay(fromDate);
@@ -89,13 +89,14 @@ function Settimana(props) {
                         <h5 className="card-title">{e.day}</h5>
                         <h5 className="card-title">{e.date.slice(8,10)}</h5>
                         <img src={sunny} className="card-img" alt={"weather"}/>
+                        <h5 className="card-text text-center">{(e.previsione_meteo).charAt(0).toUpperCase() + (e.previsione_meteo).slice(1)}</h5>
                         <div className="card-minMaxTemp mt-3">
-                            <span>{e.temperatura} <FontAwesomeIcon icon={faTemperatureHigh}/></span>
-                            <span>16 <FontAwesomeIcon icon={faTemperatureLow}/></span>
+                            <span>{e.temperatura_max} <FontAwesomeIcon icon={faTemperatureHigh}/></span>
+                            <span>{e.temperatura_min} <FontAwesomeIcon icon={faTemperatureLow}/></span>
                         </div>
-                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faCloudRain}/> {e.prob_prep}%</h5>
-                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faTint}/> 10%</h5>
-                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faWind}/> 10 m/s</h5>
+                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faCloudRain}/> {e.prob_pioggia}%</h5>
+                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faTint}/> {e.umidita}%</h5>
+                        <h5 className="card-text mt-2"><FontAwesomeIcon icon={faWind}/> {e.velocita_vento}k/ts</h5>
                     </div> 
                 </div>
                 ))}

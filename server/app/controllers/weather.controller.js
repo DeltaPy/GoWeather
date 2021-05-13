@@ -91,14 +91,27 @@ exports.findAll = (req, res) => {
 // Get a week from a date range.
 exports.getWeek = (req, res) => {
   console.log(req.body);
-  sequelize.query(`SELECT * from misurazioni WHERE DATE BETWEEN '${req.body.from}' AND '${req.body.to}'`, {type: sequelize.QueryTypes.SELECT})
+  sequelize.query(`SELECT * from misurazioni WHERE DATE >= '${(req.body.from).slice(0,10)}' AND DATE <= '${(req.body.to).slice(0,10)}'`, {type: sequelize.QueryTypes.SELECT})
   .then(data => {
     console.log(data);
-    if(data.length < 6) {
+    if(data.length < 7) {
       fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${req.body.lat}&lon=${req.body.lon}&exclude=minutely,hourly,alerts,current&appid=db63a7aaa092b7a936170ecb1bba91cf&lang=it&units=metric`)
       .then(response => response.json())
-      .then(data => console.log(data));
-      } else res.send(cleanNullWeek(data));
+      .then(dataApi => {
+        dataApi.daily.map((data, index) => {
+          let day = new Date(data.dt * 1000);
+          let dayString = day.toISOString();
+          if(data.rain === undefined) data.rain = 0;
+          sequelize.query(`INSERT IGNORE INTO misurazioni(date,temperatura,temperatura_max,temperatura_min,umidita,
+            pressione,velocita_vento,previsione_meteo,prob_pioggia) 
+            VALUES('${dayString.slice(0,10)}',${data.temp.day},${data.temp.max},${data.temp.min},
+            ${data.humidity},${data.pressure},${data.wind_speed},'${data.weather[0].description}',${data.rain})`);
+        });
+        sequelize.query(`SELECT * from misurazioni WHERE DATE >= '${(req.body.from).slice(0,10)}' AND DATE <= '${(req.body.to).slice(0,10)}'`, {type: sequelize.QueryTypes.SELECT})
+        .then(data => res.send(cleanNullWeek(data)));
+      });
+      } else 
+      res.send(cleanNullWeek(data));
   })
 }
 
