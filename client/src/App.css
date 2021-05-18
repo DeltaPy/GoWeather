@@ -32,6 +32,21 @@
   font-weight: 300;
 }
 
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  padding: 1%;
+}
+
+.gridContainer {
+  margin: auto;
+  height: 100%;
+  width: 95vw;
+  display: grid;
+  grid-template-columns: 30vw 64vw;
+  grid-template-rows: 50%;
+  gap: 0px 15px;
+}
 .glassContainer1 {
   background: rgba( 255, 255, 255, 0.05 );
   backdrop-filter: blur( 2.0px );
@@ -46,19 +61,6 @@
   -webkit-backdrop-filter: blur( 2.0px );
   border-radius: 10px;
   height: 60vh;
-}
-
-.mainContainer {
-  display: flex;
-  justify-content: center;
-}
-
-.gridContainer {
-  margin: auto;
-  height: 100%;
-  width: 95vw;
-  display: grid;
-  grid-template-columns: 30vw 64vw;
-  grid-template-rows: 50%;
-  gap: 0px 15px;
+  width: 100vw;
+  padding: 1%;
 }

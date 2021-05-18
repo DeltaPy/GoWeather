@@ -6,25 +6,12 @@ module.exports = app => {
     // Retrieve all weatherData
     router.get("/", weatherData.findAll);
 
+    // Get week from date range
     router.post("/getWeek", weatherData.getWeek);
 
-    // Create a new Data
-    router.post("/", weatherData.create);
-    
-    // Retrieve a single Data with id
-    router.get("/:id", weatherData.findOne);
-  
-    // Retrieve all published weatherData
-    router.get("/published", weatherData.findAllPublished);
-  
-    // Update a Data with id
-    router.put("/:id", weatherData.update);
-  
-    // Delete a Data with id
-    router.delete("/:id", weatherData.delete);
-  
-    // Delete all weatherData
-    router.delete("/", weatherData.deleteAll);
+    // Get current day
+    router.post("/getCurrentDay", weatherData.getCurrentDay);
+
   
     app.use('/api/weatherData', router);
   };

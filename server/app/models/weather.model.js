@@ -6,7 +6,14 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true
       },
       date: {
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATEONLY,
+        unique: true
+      },
+      lon: {
+        type: Sequelize.FLOAT
+      },
+      lat: {
+        type: Sequelize.FLOAT
       },
       temperatura: {
         type: Sequelize.FLOAT

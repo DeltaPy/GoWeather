@@ -13,30 +13,10 @@ class WeatherDataService {
       to: toDay
     })
   }
-
-  get(id) {
-    return http.get(`/weatherData/${id}`);
+  getCurrentDay() {
+    return http.post("/weatherData/getCurrentDay");
   }
-
-  create(data) {
-    return http.post("/weatherData", data);
-  }
-
-  update(id, data) {
-    return http.put(`/weatherData/${id}`, data);
-  }
-
-  delete(id) {
-    return http.delete(`/weatherData/${id}`);
-  }
-
-  deleteAll() {
-    return http.delete(`/weatherData`);
-  }
-
-  findByTitle(title) {
-    return http.get(`/weatherData?title=${title}`);
-  }
+  
 }
 
 export default new WeatherDataService();

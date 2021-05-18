@@ -31,47 +31,6 @@ function cleanNullWeek(data) {
 
 
 
-
-// Create and Save a new Tutorial
-exports.create = (req, res) => {
-  // Validate request
-  console.log(req.body);
-  if (!req.body.id) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
-  }
-
-  // Create a Tutorial
-  const weatherData = {
-    id: req.body.id,
-    date: req.body.date,
-    temperatura: req.body.temperatura,
-    prob_prep: req.body.prob_prep
-  };
-  console.log(weatherData);
-  
-  res.status(200).send({message: "Success!"});
-  
-
-    // sequelize.query('INSERT INTO misurazioni (id,title,description,published) VALUES(DEFAULT,"Ciao","Gay",1)', 
-    // {type: sequelize.QueryTypes.INSERT}).then(data => {res.status(200)
-    //     .send({message: "Success!"})});
-
-//   // Save Tutorial in the database
-//   Tutorial.create(tutorial)
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while creating the Tutorial."
-//       });
-//     });
-};
-
 // Retrieve all Data from the database.
 exports.findAll = (req, res) => {
     weatherData.findAll()
@@ -94,18 +53,25 @@ exports.getWeek = (req, res) => {
   sequelize.query(`SELECT * from misurazioni WHERE DATE >= '${(req.body.from).slice(0,10)}' AND DATE <= '${(req.body.to).slice(0,10)}'`, {type: sequelize.QueryTypes.SELECT})
   .then(data => {
     console.log(data);
+    console.log("Days returned: "+data.length);
     if(data.length < 7) {
-      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${req.body.lat}&lon=${req.body.lon}&exclude=minutely,hourly,alerts,current&appid=db63a7aaa092b7a936170ecb1bba91cf&lang=it&units=metric`)
+      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${req.body.lat}&lon=${req.body.lon}&exclude=minutely,hourly,alerts,current
+      &appid=db63a7aaa092b7a936170ecb1bba91cf&lang=it&units=metric`)
       .then(response => response.json())
       .then(dataApi => {
-        dataApi.daily.map((data, index) => {
+        console.log(dataApi);
+        dataApi.daily.map((data) => {
           let day = new Date(data.dt * 1000);
           let dayString = day.toISOString();
           if(data.rain === undefined) data.rain = 0;
-          sequelize.query(`INSERT IGNORE INTO misurazioni(date,temperatura,temperatura_max,temperatura_min,umidita,
+          sequelize.query(`INSERT INTO misurazioni(date,temperatura,temperatura_max,temperatura_min,umidita,
             pressione,velocita_vento,previsione_meteo,prob_pioggia) 
             VALUES('${dayString.slice(0,10)}',${data.temp.day},${data.temp.max},${data.temp.min},
-            ${data.humidity},${data.pressure},${data.wind_speed},'${data.weather[0].description}',${data.rain})`);
+            ${data.humidity},${data.pressure},${data.wind_speed},'${data.weather[0].description}',${data.rain}) 
+            ON DUPLICATE KEY UPDATE date='${dayString.slice(0,10)}', temperatura=${data.temp.day},
+            temperatura_max=${data.temp.max},temperatura_min=${data.temp.min}, umidita=${data.humidity},
+            pressione=${data.pressure},velocita_vento=${data.wind_speed},previsione_meteo='${data.weather[0].description}',
+            prob_pioggia=${data.rain}`);
         });
         sequelize.query(`SELECT * from misurazioni WHERE DATE >= '${(req.body.from).slice(0,10)}' AND DATE <= '${(req.body.to).slice(0,10)}'`, {type: sequelize.QueryTypes.SELECT})
         .then(data => res.send(cleanNullWeek(data)));
@@ -115,98 +81,10 @@ exports.getWeek = (req, res) => {
   })
 }
 
-// Find a single Tutorial with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-
-    weatherData.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
-        });
-      });
-};
-
-// Update a Tutorial by the id in the request
-exports.update = (req, res) => {
-    const id = req.params.id;
-
-    weatherData.update(req.body, {
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "Tutorial was updated successfully."
-          });
-        } else {
-          res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
-        });
-      });
-};
-
-// Delete a Tutorial with the specified id in the request
-exports.delete = (req, res) => {
-    const id = req.params.id;
-
-    weatherData.destroy({
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "Tutorial was deleted successfully!"
-          });
-        } else {
-          res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
-        });
-      });
-};
-
-// Delete all Tutorials from the database.
-exports.deleteAll = (req, res) => {
-    weatherData.destroy({
-        where: {},
-        truncate: false
-      })
-        .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while removing all tutorials."
-          });
-        });
-};
-
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-    weatherData.findAll({ where: { published: true } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
-};
+exports.getCurrentDay = (req, res) => {
+  console.log("Returning current day data")
+  sequelize.query(`SELECT * from misurazioni WHERE DATE(DATE) = DATE(NOW())`, {type: sequelize.QueryTypes.SELECT})
+  .then(data => {
+    res.send(data);
+  });
+}
