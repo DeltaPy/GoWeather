@@ -60,7 +60,7 @@
   backdrop-filter: blur( 2.0px );
   -webkit-backdrop-filter: blur( 2.0px );
   border-radius: 10px;
-  height: 60vh;
+  height: 70vh;
   width: 100vw;
   padding: 1%;
 }

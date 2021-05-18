@@ -52,7 +52,7 @@ exports.getWeek = (req, res) => {
   console.log(req.body);
   sequelize.query(`SELECT * from misurazioni WHERE DATE >= '${(req.body.from).slice(0,10)}' AND DATE <= '${(req.body.to).slice(0,10)}'`, {type: sequelize.QueryTypes.SELECT})
   .then(data => {
-    console.log(data);
+    // console.log(data);
     console.log("Days returned: "+data.length);
     if(data.length < 7) {
       fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${req.body.lat}&lon=${req.body.lon}&exclude=minutely,hourly,alerts,current
@@ -65,13 +65,13 @@ exports.getWeek = (req, res) => {
           let dayString = day.toISOString();
           if(data.rain === undefined) data.rain = 0;
           sequelize.query(`INSERT INTO misurazioni(date,temperatura,temperatura_max,temperatura_min,umidita,
-            pressione,velocita_vento,previsione_meteo,prob_pioggia) 
+            pressione,velocita_vento,previsione_meteo,codice_previsione,prob_pioggia) 
             VALUES('${dayString.slice(0,10)}',${data.temp.day},${data.temp.max},${data.temp.min},
-            ${data.humidity},${data.pressure},${data.wind_speed},'${data.weather[0].description}',${data.rain}) 
+            ${data.humidity},${data.pressure},${data.wind_speed},'${data.weather[0].description}',${data.weather[0].id},${data.rain}) 
             ON DUPLICATE KEY UPDATE date='${dayString.slice(0,10)}', temperatura=${data.temp.day},
             temperatura_max=${data.temp.max},temperatura_min=${data.temp.min}, umidita=${data.humidity},
             pressione=${data.pressure},velocita_vento=${data.wind_speed},previsione_meteo='${data.weather[0].description}',
-            prob_pioggia=${data.rain}`);
+            prob_pioggia=${data.rain},codice_previsione=${data.weather[0].id}`);
         });
         sequelize.query(`SELECT * from misurazioni WHERE DATE >= '${(req.body.from).slice(0,10)}' AND DATE <= '${(req.body.to).slice(0,10)}'`, {type: sequelize.QueryTypes.SELECT})
         .then(data => res.send(cleanNullWeek(data)));

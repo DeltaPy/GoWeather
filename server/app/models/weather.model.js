@@ -36,6 +36,9 @@ module.exports = (sequelize, Sequelize) => {
       previsione_meteo: {
         type: Sequelize.STRING
       },
+      codice_previsione: {
+        type: Sequelize.INTEGER
+      },
       prob_pioggia: {
         type: Sequelize.FLOAT
       }

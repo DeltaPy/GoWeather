@@ -36,7 +36,7 @@
 
 .gridButtonsContainer > span {
   color: white;
-  font-size: 30px;
+  font-size: 36px;
   text-align: center;
 }
 
@@ -49,28 +49,29 @@
 
 .card {
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .card-minMaxTemp {
   display: grid;
   grid-template-columns: 50% 50%;
   width: 100%;
-  font-size: 21px;
+  font-size: 22px;
 }
 
 .card-title {
   text-align: center;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
 }
 
 .card-text {
-  font-size: 16px;
+  font-size: 18px;
   text-align: left;
 }
 
 .card-text.prev {
-  font-size: 16px;
+  font-size: 22px;
   text-align: center !important;
   white-space: nowrap;
   

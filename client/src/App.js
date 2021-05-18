@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { faSun } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Geolocation from "react-geolocation";
 import WeatherDataService from "./services/weather.service.js";
 import './App.css';
@@ -56,7 +54,7 @@ function App() {
           <span className="citta">{city}</span>
           <span className="ora"><Clock/></span>
           <br/>
-          <span className="temperatura">{(currentDay.temperatura).toString().slice(0,2)}°<FontAwesomeIcon icon={faSun}/></span>
+          <span className="temperatura">{(currentDay.temperatura).toString().slice(0,2)}°C</span>
         </div>
 
       <div className="mainContainer">
