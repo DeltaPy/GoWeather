@@ -3,7 +3,7 @@
 }
 
 .citta {
-  color: #FFF;
+  color: #fff;
   font-size: 80px;
   font-weight: 300;
   position: relative;
@@ -11,8 +11,7 @@
 }
 
 .ora {
-
-  color: #FFF;
+  color: #fff;
   font-size: 42px;
   font-weight: 200;
   position: absolute;
@@ -23,11 +22,10 @@
   line-height: 0.8;
 }
 
-
 .temperatura {
   position: relative;
   top: -20px;
-  color: #FFF;
+  color: #fff;
   font-size: 48px;
   font-weight: 300;
 }
@@ -48,17 +46,17 @@
   gap: 0px 15px;
 }
 .glassContainer1 {
-  background: rgba( 255, 255, 255, 0.05 );
-  backdrop-filter: blur( 2.0px );
-  -webkit-backdrop-filter: blur( 2.0px );
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   border-radius: 10px;
   height: 60vh;
 }
 
 .glassContainer2 {
-  background: rgba( 255, 255, 255, 0.05 );
-  backdrop-filter: blur( 2.0px );
-  -webkit-backdrop-filter: blur( 2.0px );
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   border-radius: 10px;
   height: 70vh;
   width: 100vw;

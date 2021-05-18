@@ -15,8 +15,8 @@
   justify-content: space-evenly;
   /* gap: 35%; */
   height: 100%;
-  backdrop-filter: blur( 3.0px );
-  -webkit-backdrop-filter: blur( 3.0px );
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 .gridButtons:nth-child(1) {
@@ -74,8 +74,4 @@
   font-size: 22px;
   text-align: center !important;
   white-space: nowrap;
-  
 }
-
-
-

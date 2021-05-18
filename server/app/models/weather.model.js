@@ -1,48 +1,52 @@
 module.exports = (sequelize, Sequelize) => {
-    const weatherData = sequelize.define("misurazioni", {
+  const weatherData = sequelize.define(
+    "misurazioni",
+    {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       date: {
         type: Sequelize.DATEONLY,
-        unique: true
+        unique: true,
       },
       lon: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       lat: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       temperatura: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       temperatura_max: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       temperatura_min: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       umidita: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       pressione: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       velocita_vento: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       previsione_meteo: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       codice_previsione: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       prob_pioggia: {
-        type: Sequelize.FLOAT
-      }
-    },{freezeTableName:true, timestamps:false});
-  
-    return weatherData;
-  };
+        type: Sequelize.FLOAT,
+      },
+    },
+    { freezeTableName: true, timestamps: false }
+  );
+
+  return weatherData;
+};
