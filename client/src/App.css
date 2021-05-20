@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+.logo {
+  width: 30vw;
+  left: 2%;
+  top: 6%;
+  position: absolute;
+}
+
 .citta {
   color: #fff;
   font-size: 80px;

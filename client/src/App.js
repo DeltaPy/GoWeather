@@ -7,6 +7,8 @@ import "./App.css";
 import Settimana from "./components/settimana/settimana.js";
 import Clock from "./components/clock.js";
 
+import logo from "./images/GoWeather-light.png";
+
 function App() {
   const [city, setCity] = useState("Inserisci la città");
   const [currentDay, setCurrentDay] = useState({ temperatura: "Loading..." });
@@ -54,6 +56,7 @@ function App() {
         <li className="star2"></li>
       </ul>
       <div className="location">
+        <img className="logo" src={logo}/>
         <span className="citta">{city}</span>
         <span className="ora">
           <Clock />
