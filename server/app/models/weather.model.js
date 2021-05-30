@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
       },
       date: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
         unique: true,
       },
       lon: {
@@ -16,6 +16,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       lat: {
         type: Sequelize.FLOAT,
+      },
+      localita: {
+        type: Sequelize.STRING,
       },
       temperatura: {
         type: Sequelize.FLOAT,

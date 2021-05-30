@@ -24,5 +24,5 @@ app.get("/", (req, res) => {
 require("./app/routes/weather.routes")(app);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+  console.log(`Il server è in esecuzione sulla porta ${PORT}.`);
 });

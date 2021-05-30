@@ -62,20 +62,20 @@ exports.getWeek = (req, res) => {
       { type: sequelize.QueryTypes.SELECT }
     )
     .then((data) => {
-      // console.log(data);
+      console.log(data);
       console.log("Days returned: " + data.length);
       if (data.length < 7) {
         fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${req.body.lat}&lon=${req.body.lon}&exclude=minutely,hourly,alerts,current
-      &appid=db63a7aaa092b7a936170ecb1bba91cf&lang=it&units=metric`)
+              &appid=db63a7aaa092b7a936170ecb1bba91cf&lang=it&units=metric`)
           .then((response) => response.json())
           .then((dataApi) => {
-            console.log(dataApi);
+            // console.log(dataApi);
             dataApi.daily.map((data) => {
               let day = new Date(data.dt * 1000);
               let dayString = day.toISOString();
               if (data.rain === undefined) data.rain = 0;
               sequelize.query(`INSERT INTO misurazioni(date,temperatura,temperatura_max,temperatura_min,umidita,
-            pressione,velocita_vento,previsione_meteo,codice_previsione,prob_pioggia) 
+                              pressione,velocita_vento,previsione_meteo,codice_previsione,prob_pioggia) 
             VALUES('${dayString.slice(0, 10)}',${data.temp.day},${
                 data.temp.max
               },${data.temp.min},
@@ -86,12 +86,12 @@ exports.getWeek = (req, res) => {
               0,
               10
             )}', temperatura=${data.temp.day},
-            temperatura_max=${data.temp.max},temperatura_min=${
+            temperatura_max=${data.temp.max}, temperatura_min=${
                 data.temp.min
               }, umidita=${data.humidity},
-            pressione=${data.pressure},velocita_vento=${
+            pressione=${data.pressure}, velocita_vento=${
                 data.wind_speed
-              },previsione_meteo='${data.weather[0].description}',
+              }, previsione_meteo='${data.weather[0].description}',
             prob_pioggia=${data.rain},codice_previsione=${data.weather[0].id}`);
             });
             sequelize

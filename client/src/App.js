@@ -11,7 +11,7 @@ import logo from "./images/GoWeather-light.png";
 
 function App() {
   const [city, setCity] = useState("Inserisci la città");
-  const [currentDay, setCurrentDay] = useState({ temperatura: "Loading..." });
+  const [currentDay, setCurrentDay] = useState({ temperatura: "Na" });
 
   function getCurrentDay() {
     WeatherDataService.getCurrentDay()
@@ -46,7 +46,7 @@ function App() {
               { referrer: "about:client" }
             )
               .then((response) => response.json())
-              .then((data) => setCity(data.address.city));
+              .then((data) => setCity(data.address.city ? data.address.city : data.address.county));
             break;
           }
         }}

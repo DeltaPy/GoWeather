@@ -45,7 +45,6 @@ function Settimana(props) {
     )
       .then((response) => {
         convertDateToDays(response.data);
-        // console.log(response.data);
       })
       .catch((err) => {
         console.error(err);
